@@ -6,7 +6,7 @@ This repository contains MicroPython code snipped that was developed for **Raspb
 The following sensors are included in this folder:
 
 Project Name | Sensor | Description
-— | — | —
+--- | --- | ---
 P1_HelloWorld | N.A. | The first program that shows your board programmed successfully with MicroPython
 P2_Blink | N.A. | Raspberry Pi Pico W has an onboard LED which this code will test it 
 
