@@ -1,1 +1,1 @@
-# pico-w
+# Raspberry Pi Pico W MicroPython
