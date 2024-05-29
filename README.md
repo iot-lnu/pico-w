@@ -4,6 +4,7 @@ This repository contains MicroPython code snipped that was developed for **Raspb
 
 ## Sensor Examples
 The following sensors are included in this folder:
+
 Project Name | Sensor | Description
 — | — | —
 P1_HelloWorld | N.A. | The first program that shows your board programmed successfully with MicroPython
