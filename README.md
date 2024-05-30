@@ -8,7 +8,7 @@ The following sensors are included in this folder:
 Project Name | Sensor | Description
 --- | --- | ---
 [P1_HelloWorld](./sensor-examples/P1_HelloWorld/) | N.A. | The first program that shows your board programmed successfully with MicroPython
-P2_Blink | N.A. | Raspberry Pi Pico W has an onboard LED which this code will test it 
+[P2_Blink](sensor-examples/P2_Blink/) | N.A. | Raspberry Pi Pico W has an onboard LED which this code will test it 
 P3_Push_Button | Key Switch Module (Push Button) | Turn on/off onboard LED with push button
 P4_Rotary_Encoder | Rotary Encoder | Print numbers by turning it clockwise/anticlockwise. 
 P5_DHT_11_DHT_22 | DHT11 | Prints temperature in Celsius and humidity in percentage
