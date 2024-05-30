@@ -9,7 +9,7 @@ Project Name | Sensor | Description
 --- | --- | ---
 [P1_HelloWorld](./sensor-examples/P1_HelloWorld/) | N.A. | The first program that shows your board programmed successfully with MicroPython
 [P2_Blink](./sensor-examples/P2_Blink/) | N.A. | Raspberry Pi Pico W has an onboard LED which this code will test it 
-[P3_Push_Button](./sensor-examples/P3_Push_Button/) | Key Switch Module (Push Button) | Turn on/off onboard LED with push button
+[P3_Push_Button](./sensor-examples/P3_Push_Button/) | Key Switch Module (Push Button) ![](./sensor-examples/P3_Push_Button/connection/P3_Push_Button.jpg) | Turn on/off onboard LED with push button
 [P4_Rotary_Encoder](./sensor-examples/P4_Rotary_Encoder/) | Rotary Encoder | Print numbers by turning it clockwise/anticlockwise. 
 [P5_DHT_11_DHT_22](./sensor-examples/P5_DHT_11_DHT_22/) | DHT11 | Prints temperature in Celsius and humidity in percentage
 [P6_DS18B20_(OneWire)](./sensor-examples/P6_DS18B20_(OneWire)/) | DS18B20 Temperature | Scanning 1-wire for all sensors and printing the values in Celsius
