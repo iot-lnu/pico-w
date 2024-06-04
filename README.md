@@ -40,7 +40,14 @@ Project Name | Sensor | Description
 [P31_BME680](./sensor-examples/P31_BME680/) | ![](./sensor-examples/P31_BME680/connection/P31_BME680.jpg) BME680 | Prints temperature, humidity, pressure, and gas to the terminal
 [P32_Small_Microphone](./sensor-examples/P32_Small_Microphone/) | ![](./sensor-examples/P32_Small_Microphone/connection/P32_Small_Microphone.jpg) Small Microphone | Prints analog pin value to the terminal and turns LED on on digital pin triggers
 [P33_MCP9700_Analog_Temperature](./sensor-examples/P33_MCP9700_Analog_Temperature/) | ![](./sensor-examples/P33_MCP9700_Analog_Temperature/connection/P33_MCP9700.jpg) MCP9700 | Prints analog temperature value to the terminal
+[P34_Soil_Moisture](./sensor-examples/P34_Soil_Moisture/) | ![](./sensor-examples/P34_Soil_Moisture/connection/P34_Soil_Moisture.jpg) Soil Moisture | Prints the soil moisture in percentage
 
 
 ## Network Examples
-To ADD… 
+The following network examples are included in this folder:
+
+Project Name | Logo | Description
+--- | --- | ---
+[N1_WiFi_Connection](./network-examples/N1_WiFi_Connection/) | ![](./network-examples/N1_WiFi_Connection/logo/wifi_logo.jpg) WiFi | Example shows how to connect your board to the internet
+To ADD... | |
+
