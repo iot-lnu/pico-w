@@ -47,4 +47,4 @@ The following network examples are included in this folder:
 
 Project Name | Logo | Description
 --- | --- | ---
-[WiFi Connection](./network-examples/N1_WiFi_Connection/) | ![](./network-examples/N1_WiFi_Connection/logo/wifi_logo.png) WiFi | Example shows how to connect your board to the internet
+[WiFi Connection](./network-examples/N1_WiFi_Connection/) | ![](./network-examples/N1_WiFi_Connection/logo/wifi_logo.jpg) WiFi | Example shows how to connect your board to the internet
