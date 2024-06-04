@@ -43,4 +43,8 @@ Project Name | Sensor | Description
 
 
 ## Network Examples
-To ADD… 
+The following network examples are included in this folder:
+
+Project Name | Logo | Description
+--- | --- | ---
+[WiFi Connection](./network-examples/N1_WiFi_Connection/) | ![](./network-examples/N1_WiFi_Connection/logo/wifi_logo.png)
