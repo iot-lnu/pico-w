@@ -1,13 +1,12 @@
 import struct
-import binascii
 import time
 from LoRaWAN import lora
 
 lora = lora()
 
-DEV_EUI = "70B3D57ED005E758"
-APP_EUI = "0000000000001234"
-APP_KEY = "31CC62B0256EA3311EEFDCB9ED2CEC3B"
+APP_EUI = "0000000000001234"                   # Substitute Your APP_EUI here
+DEV_EUI = "70B3D57ED005E758"                   # Substitute Your DEV_EUI here
+APP_KEY = "31CC62B0256EA3311EEFDCB9ED2CEC3B"   # Substitute Your APP_KEY here
 
 lora.configure(DEV_EUI, APP_EUI, APP_KEY)
 
@@ -28,8 +27,11 @@ temp_int = int(temperature * 10)
 humidity_int = int(humidity * 10)
 
 # https://docs.micropython.org/en/latest/library/struct.html
+# >: Indicates big-endian byte order. Big-endian means the most significant byte is stored first.
+# h: Represents a short integer (2 bytes).
+# H: Represents an unsigned short integer (2 bytes).
 payload = struct.pack(">hH", temp_int, humidity_int)
-payload = binascii.hexlify(payload).decode("utf-8")
+payload = payload.hex()
 
 
 while True:
