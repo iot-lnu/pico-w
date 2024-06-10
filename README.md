@@ -11,7 +11,7 @@ Project Name | Sensor | Description
 [P2_Blink](./sensor-examples/P2_Blink/) | N.A. | Raspberry Pi Pico W has an onboard LED which this code will test it 
 [P3_Push_Button](./sensor-examples/P3_Push_Button/) | ![](./sensor-examples/P3_Push_Button/connection/P3_Push_Button.jpg) Key Switch Module (Push Button) | Turn on/off onboard LED with push button
 [P4_Rotary_Encoder](./sensor-examples/P4_Rotary_Encoder/) | ![](./sensor-examples/P4_Rotary_Encoder/connection/P4_Rotatry_Encoder.jpg) Rotary Encoder | Print numbers by turning it clockwise/anticlockwise. 
-[P5_DHT_11_DHT_22](./sensor-examples/P5_DHT_11_DHT_22/) | ![](./sensor-examples/P5_DHT_11_DHT_22/connection/P5_DHT11.jpg) DHT11 | Prints temperature in Celsius and humidity in percentage
+[P5_DHT_11_DHT_22](./sensor-examples/P5_DHT_11_DHT_22/) | ![](./sensor-examples/P5_DHT_11_DHT_22/connection/P5_DHT11.jpg) ![](./sensor-examples/P5_DHT_11_DHT_22/connection/P5_DHT11_resistor.jpg) DHT11 | Prints temperature in Celsius and humidity in percentage
 [P6_DS18B20_(OneWire)](./sensor-examples/P6_DS18B20_(OneWire)/) | ![](./sensor-examples/P6_DS18B20_(OneWire)/connection/P6_DS18B20.jpg) DS18B20 Temperature | Scanning 1-wire for all sensors and printing the values in Celsius
 [P7_NTC_Thermistor(ADC)](./sensor-examples/P7_NTC_Thermistor(ADC)/) | ![](./sensor-examples/P7_NTC_Thermistor(ADC)/connection/P7_NTC_Thermistor.jpg) Analog Temperature | Read the analog value from the thermistor and change it to Celsius
 [P8_RG_LED_PWM](./sensor-examples/P8_RG_LED_PWM/) | ![](./sensor-examples/P8_RG_LED_PWM/connection/P8_RG_Two_Color.jpg) Two Color LED | Using PWM to fade LED between green and red
@@ -21,13 +21,13 @@ Project Name | Sensor | Description
 [P12_Line_Follower](./sensor-examples/P12_Line_Follower/) | ![](./sensor-examples/P12_Line_Follower/connection/P12_Path_Follower.jpg) Line Follower | Prints message while it detects a line different color than the background
 [P13_IR_Transmitter_Receiver](./sensor-examples/P13_IR_Transmitter_Receiver/) | IR Receiver & Transmitter | TO DEVELOP… 
 [P14_Reed_Switch](./sensor-examples/P14_Reed_Switch/) | ![](./sensor-examples/P14_Reed_Switch/connection/P14_Reed_Switch.jpg) Reed Switch | Print “Magnetic Detected…” to the terminal if there is a strong magnet close to it
-[P15_Hall_Sensor_Analog_Digital](./sensor-examples/P15_Hall_Sensor_Analog_Digital/) | ![](./sensor-examples/P15_Hall_Sensor_Analog_Digital/connection/P15_Halleffect.jpg) Hall Effect Sensor | Print to the terminal if it catches a magnetic effect
+[P15_Hall_Sensor_Analog_Digital](./sensor-examples/P15_Hall_Sensor_Analog_Digital/) | ![](./sensor-examples/P15_Hall_Sensor_Analog_Digital/connection/P15_Halleffect.jpg) ![](./sensor-examples/P15_Hall_Sensor_Analog_Digital/connection/P15_Halleffect_with_resistor.jpg) Hall Effect Sensor | Print to the terminal if it catches a magnetic effect
 [P16_Joystick](./sensor-examples/P16_Joystick/) | ![](./sensor-examples/P16_Joystick/connection/P16_Joystick.jpg) Joystick | Prints the value and direction of the joystick thumb control and the state of its button
 [P17_Heartbeat](./sensor-examples/P17_Heartbeat/) | ![](./sensor-examples/P17_Heartbeat/connection/P17_Heartbeat.jpg) Heartbeat Sensor | Prints the ADC value to the terminal
 [P18_Active_Piezo_Buzzer](./sensor-examples/P18_Active_Piezo_Buzzer/) | ![](./sensor-examples/P18_Active_Piezo_Buzzer/connection/P18_Active_Piezo.jpg) Active Piezo Buzzer | Beeping and printing the state to the terminal
 [P19_Passive_Piezo_Buzzer](./sensor-examples/P19_Passive_Piezo_Buzzer/) | ![](./sensor-examples/P19_Passive_Piezo_Buzzer/connection/P19_Passive_Piezo.jpg) Passive Piezo Buzzer | Play short songs with passive piezo
 [P20_Vibration_Sensor](./sensor-examples/P20_Vibration_Sensor/) | ![](./sensor-examples/P20_Vibration_Sensor/connection/P20_Vibration.jpg) Vibration Sensor | Detect vibration and prints to the terminal
-[P21_Tilt_Switch](./sensor-examples/P21_Tilt_Switch/) | ![](./sensor-examples/P21_Tilt_Switch/connection/P21_Tilt_Switch.jpg) Tilt Switch | Print On/Off when we rotate the tilt switch
+[P21_Tilt_Switch](./sensor-examples/P21_Tilt_Switch/) | ![](./sensor-examples/P21_Tilt_Switch/connection/P21_Tilt_Switch.jpg) ![](./sensor-examples/P21_Tilt_Switch/connection/P21_Tilt_Switch_4pin.jpg) Tilt Switch | Print On/Off when we rotate the tilt switch
 [P22_Knock_Sensor](./sensor-examples/P22_Knock_Sensor/) | ![](./sensor-examples/P22_Knock_Sensor/connection/P22_Knock.jpg) Vibration Shake Sensor | It prints to the terminal when detecting knocking on the sensor
 [P23_LDR_Photo_Resistor](./sensor-examples/P23_LDR_Photo_Resistor/) | ![](./sensor-examples/P23_LDR_Photo_Resistor/connection/P23_Photoresistor.jpg) Photoresistor | It prints to the terminal and turns on the onboard LED if darkness is more than 70 percent
 [P24_Photo_Interrupter](./sensor-examples/P24_Photo_Interrupter/) | ![](./sensor-examples/P24_Photo_Interrupter/connection/P24_Photo_Interrupter.jpg) Photo Interrupter | Prints to the terminal if a paper inserted in the middle of it
@@ -49,6 +49,7 @@ The following network examples are included in this folder:
 Project Name | Logo | Description
 --- | --- | ---
 [N1_WiFi_Connection](./network-examples/N1_WiFi_Connection/) | ![](./network-examples/N1_WiFi_Connection/logo/wifi_logo.jpg) WiFi | Example shows how to connect your board to the internet
-To ADD... | |
+[N2_WiFi_MQTT_Webhook_Adafruit](./network-examples/N2_WiFi_MQTT_Webhook_Adafruit/) | ![](./network-examples/N2_WiFi_MQTT_Webhook_Adafruit/logo/adafruit_logo.jpg) Adafruit ![](./network-examples/N2_WiFi_MQTT_Webhook_Adafruit/logo/mqtt_logo.jpg) MQTT ![](./network-examples/N2_WiFi_MQTT_Webhook_Adafruit/logo/webhook_logo.jpg) Webhook | The example shows how to use the MQTT protocol to send a message to the Adafruit broker and control your device from the Adafruit dashboard, it also shows how to use Webhook to send an alarm to your Discord server from Adafruit 
+[N3_WiFi_REST_API_Ubidots](./network-examples/N3_WiFi_REST_API_Ubidots/) | ![](./network-examples/N3_WiFi_REST_API_Ubidots/logo/ubidots_logo.jpg) Ubidots | The example shows how to use the REST API to send messages from your Raspberry Pi Pico W to the Ubidots dashboard
 [N4_LoRaWAN_Connection](./network-examples/N4_LoRaWAN_Connection/) | ![](./network-examples/N4_LoRaWAN_Connection/connection/N4_LoRaWAN_Connection.jpg) M5Stack module | Example shows the usage of LoRaWAN connection on Raspberry Pi Pico W with M5Stack LoRa module
 To ADD... | |
