@@ -49,6 +49,7 @@ The following network examples are included in this folder:
 Project Name | Logo | Description
 --- | --- | ---
 [N1_WiFi_Connection](./network-examples/N1_WiFi_Connection/) | ![](./network-examples/N1_WiFi_Connection/logo/wifi_logo.jpg) WiFi | Example shows how to connect your board to the internet
-To ADD... | |
+[N2_WiFi_MQTT_Webhook_Adafruit](./network-examples/N2_WiFi_MQTT_Webhook_Adafruit/) | ![](./network-examples/N2_WiFi_MQTT_Webhook_Adafruit/logo/adafruit_logo.jpg) Adafruit ![](./network-examples/N2_WiFi_MQTT_Webhook_Adafruit/logo/mqtt_logo.jpg) MQTT ![](./network-examples/N2_WiFi_MQTT_Webhook_Adafruit/logo/webhook_logo.jpg) Webhook | The example shows how to use the MQTT protocol to send a message to the Adafruit broker and control your device from the Adafruit dashboard, it also shows how to use Webhook to send an alarm to your Discord server from Adafruit 
+[N3_WiFi_REST_API_Ubidots](./network-examples/N3_WiFi_REST_API_Ubidots/) | ![](./network-examples/N3_WiFi_REST_API_Ubidots/logo/ubidots_logo.jpg) Ubidots | The example shows how to use the REST API to send messages from your Raspberry Pi Pico W to the Ubidots dashboard
 [N4_LoRaWAN_Connection](./network-examples/N4_LoRaWAN_Connection/) | ![](./network-examples/N4_LoRaWAN_Connection/connection/N4_LoRaWAN_Connection.jpg) M5Stack module | Example shows the usage of LoRaWAN connection on Raspberry Pi Pico W with M5Stack LoRa module
 To ADD... | |
