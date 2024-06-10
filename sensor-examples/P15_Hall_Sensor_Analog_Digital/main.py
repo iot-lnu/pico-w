@@ -10,7 +10,7 @@ while True:
     #analogValue = analogPin.read_u16()
     digitalValue = digitalPin.value()
     #print("The magnetic strength is {}".format(analogValue))  # The stronger magnet the lower value it produce
-    if digitalValue == False:
+    if digitalValue == False:     # if your sensor prints reverse when there is no magnetic field change this False to True 
         print("Digital pin activated...")
     else:
         print("Digital pin inactive...")

@@ -11,7 +11,7 @@ Project Name | Sensor | Description
 [P2_Blink](./sensor-examples/P2_Blink/) | N.A. | Raspberry Pi Pico W has an onboard LED which this code will test it 
 [P3_Push_Button](./sensor-examples/P3_Push_Button/) | ![](./sensor-examples/P3_Push_Button/connection/P3_Push_Button.jpg) Key Switch Module (Push Button) | Turn on/off onboard LED with push button
 [P4_Rotary_Encoder](./sensor-examples/P4_Rotary_Encoder/) | ![](./sensor-examples/P4_Rotary_Encoder/connection/P4_Rotatry_Encoder.jpg) Rotary Encoder | Print numbers by turning it clockwise/anticlockwise. 
-[P5_DHT_11_DHT_22](./sensor-examples/P5_DHT_11_DHT_22/) | ![](./sensor-examples/P5_DHT_11_DHT_22/connection/P5_DHT11.jpg) DHT11 | Prints temperature in Celsius and humidity in percentage
+[P5_DHT_11_DHT_22](./sensor-examples/P5_DHT_11_DHT_22/) | ![](./sensor-examples/P5_DHT_11_DHT_22/connection/P5_DHT11.jpg) ![](./sensor-examples/P5_DHT_11_DHT_22/connection/P5_DHT11_resistor.jpg) DHT11 | Prints temperature in Celsius and humidity in percentage
 [P6_DS18B20_(OneWire)](./sensor-examples/P6_DS18B20_(OneWire)/) | ![](./sensor-examples/P6_DS18B20_(OneWire)/connection/P6_DS18B20.jpg) DS18B20 Temperature | Scanning 1-wire for all sensors and printing the values in Celsius
 [P7_NTC_Thermistor(ADC)](./sensor-examples/P7_NTC_Thermistor(ADC)/) | ![](./sensor-examples/P7_NTC_Thermistor(ADC)/connection/P7_NTC_Thermistor.jpg) Analog Temperature | Read the analog value from the thermistor and change it to Celsius
 [P8_RG_LED_PWM](./sensor-examples/P8_RG_LED_PWM/) | ![](./sensor-examples/P8_RG_LED_PWM/connection/P8_RG_Two_Color.jpg) Two Color LED | Using PWM to fade LED between green and red
