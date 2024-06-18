@@ -1,5 +1,5 @@
 from machine import Pin
-import time
+from time import sleep_ms
 
 tiltPin = Pin(27, Pin.IN)
 
@@ -8,4 +8,4 @@ while True:
         print("Switch ON...")
     else:
         print("Switch OFF...")
-    time.sleep_ms(500) 
+    sleep_ms(500) 

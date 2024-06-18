@@ -1,9 +1,12 @@
 # MicroPython SSD1306 OLED driver, I2C and SPI interfaces
-'''
-Link: https://github.com/stlehmann/micropython-ssd1306
-'''
+#
+# library taken from repository at:
+# https://github.com/micropython/micropython/blob/master/drivers/display/ssd1306.py
+#
+from machine import SoftI2C
 from micropython import const
 import framebuf
+from time import sleep_ms
 
 
 # register definitions
@@ -29,7 +32,14 @@ SET_CHARGE_PUMP = const(0x8D)
 # Subclassing FrameBuffer provides support for graphics primitives
 # http://docs.micropython.org/en/latest/pyboard/library/framebuf.html
 class SSD1306(framebuf.FrameBuffer):
-    def __init__(self, width, height, external_vcc):
+    __slots__ = ("width",
+                 "height",
+                 "external_vcc",
+                 "pages",
+                 "buffer"
+                )
+    
+    def __init__(self, width: int, height: int, external_vcc:bool) -> None:
         self.width = width
         self.height = height
         self.external_vcc = external_vcc
@@ -38,7 +48,7 @@ class SSD1306(framebuf.FrameBuffer):
         super().__init__(self.buffer, self.width, self.height, framebuf.MONO_VLSB)
         self.init_display()
 
-    def init_display(self):
+    def init_display(self)  -> None:
         for cmd in (
             SET_DISP,  # display off
             # address setting
@@ -77,24 +87,24 @@ class SSD1306(framebuf.FrameBuffer):
         self.fill(0)
         self.show()
 
-    def poweroff(self):
+    def poweroff(self) -> None:
         self.write_cmd(SET_DISP)
 
-    def poweron(self):
+    def poweron(self) -> None:
         self.write_cmd(SET_DISP | 0x01)
 
-    def contrast(self, contrast):
+    def contrast(self, contrast: bytes) -> None:
         self.write_cmd(SET_CONTRAST)
         self.write_cmd(contrast)
 
-    def invert(self, invert):
+    def invert(self, invert: bool) -> None:
         self.write_cmd(SET_NORM_INV | (invert & 1))
 
-    def rotate(self, rotate):
+    def rotate(self, rotate: bool) -> None:
         self.write_cmd(SET_COM_OUT_DIR | ((rotate & 1) << 3))
         self.write_cmd(SET_SEG_REMAP | (rotate & 1))
 
-    def show(self):
+    def show(self) -> None:
         x0 = 0
         x1 = self.width - 1
         if self.width != 128:
@@ -112,25 +122,39 @@ class SSD1306(framebuf.FrameBuffer):
 
 
 class SSD1306_I2C(SSD1306):
-    def __init__(self, width, height, i2c, addr=0x3C, external_vcc=False):
+    __slots____ = ("i2c",
+                   "addr",
+                   "temp",
+                   "write_list"
+                   )
+    
+    def __init__(self, width: float, height:float, i2c: SoftI2C, addr: bytes = 0x3C, external_vcc: bool = False) -> None:
         self.i2c = i2c
         self.addr = addr
         self.temp = bytearray(2)
         self.write_list = [b"\x40", None]  # Co=0, D/C#=1
         super().__init__(width, height, external_vcc)
 
-    def write_cmd(self, cmd):
+    def write_cmd(self, cmd: bytes) -> None:
         self.temp[0] = 0x80  # Co=1, D/C#=0
         self.temp[1] = cmd
         self.i2c.writeto(self.addr, self.temp)
 
-    def write_data(self, buf):
+    def write_data(self, buf: bytearray) -> None:
         self.write_list[1] = buf
         self.i2c.writevto(self.addr, self.write_list)
 
 
 class SSD1306_SPI(SSD1306):
-    def __init__(self, width, height, spi, dc, res, cs, external_vcc=False):
+    
+    __slots__ = ("spi",
+                 "dc",
+                 "res",
+                 "cs",
+                 "rate"
+                )
+    
+    def __init__(self, width:float, height: float, spi, dc, res, cs, external_vcc: bool = False) -> None:
         self.rate = 10 * 1024 * 1024
         dc.init(dc.OUT, value=0)
         res.init(res.OUT, value=0)
@@ -139,16 +163,15 @@ class SSD1306_SPI(SSD1306):
         self.dc = dc
         self.res = res
         self.cs = cs
-        import time
 
         self.res(1)
-        time.sleep_ms(1)
+        sleep_ms(1)
         self.res(0)
-        time.sleep_ms(10)
+        sleep_ms(10)
         self.res(1)
         super().__init__(width, height, external_vcc)
 
-    def write_cmd(self, cmd):
+    def write_cmd(self, cmd: bytes) -> None:
         self.spi.init(baudrate=self.rate, polarity=0, phase=0)
         self.cs(1)
         self.dc(0)
@@ -156,7 +179,7 @@ class SSD1306_SPI(SSD1306):
         self.spi.write(bytearray([cmd]))
         self.cs(1)
 
-    def write_data(self, buf):
+    def write_data(self, buf: bytearray) -> None:
         self.spi.init(baudrate=self.rate, polarity=0, phase=0)
         self.cs(1)
         self.dc(1)

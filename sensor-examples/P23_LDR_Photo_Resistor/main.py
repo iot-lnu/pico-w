@@ -9,7 +9,7 @@ while True:
     light = ldr.read_u16()
     darkness = round(light / 65535 * 100, 2)
     if darkness >= 70:
-        print("Darkness is {}%, LED turned on".format(darkness))
+        print(f"Darkness is {darkness}%, LED turned on")
         led.on()
     else:
         print("It is enough light, no need to turn the LED on")

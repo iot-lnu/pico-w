@@ -1,9 +1,3 @@
-'''
-Link: https://github.com/james1236/buzzer_music
-'''
-from buzzer_music import music
-from time import sleep
-
 #Example songs
 
 #    https://onlinesequencer.net/195547
@@ -46,15 +40,19 @@ then select all notes with CTRL+A and copy them with CTRL+C
 Paste string as shown above after removing ";:" from
 the end and "Online Sequencer:120233:" from the start
 """
-
+'''
+Link: https://github.com/james1236/buzzer_music
+'''
+from buzzer_music import music
+from time import sleep_ms
 from machine import Pin
 
 #One buzzer on pin 0
-mySong = music(song, pins=[Pin(27)])
+mySong:music = music(song, pins=[Pin(27)])
 
 #Four buzzers
 #mySong = music(song, pins=[Pin(0),Pin(1),Pin(2),Pin(3)])
 
 while True:
     print(mySong.tick())
-    sleep(0.04)
+    sleep_ms(40)

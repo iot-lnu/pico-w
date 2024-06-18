@@ -1,5 +1,5 @@
 from machine import Pin
-import time
+from time import sleep_ms
 
 vibratePin = Pin(27, Pin.IN)
 
@@ -8,4 +8,4 @@ while True:
         print("No vibration...")
     else:
         print("Vibration detected...")
-    time.sleep_ms(500) 
+    sleep_ms(500) 
