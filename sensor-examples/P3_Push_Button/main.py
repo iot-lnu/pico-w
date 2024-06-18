@@ -1,7 +1,7 @@
 from machine import Pin
 import time
 
-led = Pin("LED", Pin.OUT)       # Set led pin as outpu
+led = Pin("LED", Pin.OUT)       # Set led pin as output
 push_button = Pin(27, Pin.IN)   # Set push button pin as input (It is connected to PULL_UP resistor
                                 # and the default value is without pushing it is True)
 

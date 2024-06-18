@@ -4,9 +4,8 @@
 
 # example for MicroPython rotary encoder
 
-import sys
 from rotary_irq_rp2 import RotaryIRQ
-import time
+from time import sleep_ms
 
 
 r = RotaryIRQ(pin_num_clk=26,
@@ -16,12 +15,14 @@ r = RotaryIRQ(pin_num_clk=26,
               reverse=False,
               range_mode=RotaryIRQ.RANGE_WRAP)
 
-val_old = r.value()
-while True:
-    val_new = r.value()
+def callback():
+    global r
+    
+    print(f"encoder value = {r.value()}")
+    sleep_ms(10)
 
-    if val_old != val_new:
-        val_old = val_new
-        print('step =', val_new)
+"""
+The way that the rotary encoder class works is that callbacks are triggered every time the encoder is rotated.
+The callbacks are registered via the .add_listener() method, added to a list, and take no arguments.
+"""
 
-    time.sleep_ms(50)
