@@ -11,8 +11,9 @@ A new sensor requires at 48-burn in. Once burned in a sensor requires
 Tested on WiPY2
 """
 
-from machine import I2C
+from machine import I2C, SoftI2C
 import time
+from typing import *
 
 # default address
 CCS811_ADDR = const(0x5B)
@@ -38,8 +39,13 @@ CCS811_SW_RESET = const(0xFF)
 
 class CCS811(object):
     """ CCS811 gas sensor driver. """
+    
+    __slots__:Tuple[str] = ("i2c", 
+                            "addr", 
+                            "tVOC", 
+                            "CO2")
 
-    def __init__(self, i2c=None, addr=CCS811_ADDR):
+    def __init__(self, i2c: I2C | SoftI2C = None, addr: bytes = CCS811_ADDR):
         self.i2c = i2c
         self.addr = addr
         self.tVOC = 0
@@ -47,8 +53,7 @@ class CCS811(object):
 
         # Check if sensor is vailable at i2c bus address
         devices = i2c.scan()
-        if self.addr not in devices:
-            raise ValueError('CCS811 not found. Please check wiring. Pull nWake to ground.')
+        if self.addr not in devices: raise ValueError('CCS811 not found. Please check wiring. Pull nWake to ground.')
         """########################################################################
         # See figure 22 in datasheet: Bootloader Register Map
         # Check HW_ID register (0x20) - correct value 0x81
@@ -85,7 +90,7 @@ class CCS811(object):
         print(message)
 
 
-    def configure_ccs811(self):
+    def configure_ccs811(self) -> None:
 
         # Check that the HW id is correct
         hardware_id = self.i2c.readfrom_mem(self.addr, CCS811_HW_ID, 1)
@@ -118,7 +123,7 @@ class CCS811(object):
             self.print_error()
             raise ValueError('Error at setDriveMode.')
 
-    def setup(self):
+    def setup(self) -> None:
 
         print('Starting CCS811 Read')
         self.configure_ccs811()
@@ -132,7 +137,7 @@ class CCS811(object):
             print('0')
         print('baseline for this sensor =   ', result)
 
-    def get_base_line(self):
+    def get_base_line(self) -> bytes:
 
         b = self.i2c.readfrom_mem(self.addr, CCS811_BASELINE, 2)
         baselineMSB = b[0]
@@ -140,7 +145,7 @@ class CCS811(object):
         baseline = (baselineMSB << 8) | baselineLSB
         return baseline
 
-    def check_for_error(self):
+    def check_for_error(self) -> bool:
         value = self.i2c.readfrom_mem(self.addr, CCS811_STATUS, 1)
         # print('Value_error', value)
         # print(value[0] )
@@ -149,11 +154,9 @@ class CCS811(object):
         # print('V error = ', v)
         return ((value[0] >> 0) & 1)
 
-    def app_valid(self):
+    def app_valid(self) -> bool:
         # Check Status Register (0x00) to see if valid application present-
         value = self.i2c.readfrom_mem(self.addr, CCS811_STATUS, 1)
-        # print('Value', value)
-        # print(value[0])
 
         # See figure 12 in datasheet: Status register: Bit 4: App valid
         v = ((value[0] >> 4) & 1)
@@ -161,28 +164,15 @@ class CCS811(object):
         return ((value[0] >> 4) & 1)
 
     # Set drive mode 1 - see Figure 13 in datasheet: Measure Mode Register (0x01)
-    def set_drive_mode(self, mode):
+    def set_drive_mode(self, mode: int) -> None:
         if mode > 4:
             mode = 4
 
-            #   Clean_reg
         self.i2c.writeto_mem(self.addr, 0x01, bytearray([0b00011000]))
-        """
-        self.i2c.writeto_mem(self.addr, CCS811_MEAS_MODE, 0x00)
-        time.sleep(1)
-
-        setting = self.i2c.readfrom(self.addr, CCS811_MEAS_MODE)
-        # print('Setting_start =  ', setting, setting[0])
-
-        buf1 = setting[0] & (~(0b10000111 << 4))
-        buf2 = buf1 | (mode << 4)
-
-        self.i2c.writeto_mem(self.addr, CCS811_MEAS_MODE, bytes([buf2]))
-        # i2c.writeto_mem(device, CCS811_MEAS_MODE, 0x10)"""
         time.sleep(2)
 
 
-    def data_available(self):
+    def data_available(self) -> bool:
 
         value = self.i2c.readfrom_mem(self.addr, CCS811_STATUS, 1)
         retValue = (value[0] >> 3) & 0x01
@@ -190,18 +180,21 @@ class CCS811(object):
         return retValue
         #return value[0] << 3
 
-    def readSensorData(self):
-        if self.data_available():
-            register = self.i2c.readfrom_mem(self.addr, 0x02, 4)
-            co2HB = register[0]
-            co2LB = register[1]
-            tVOCHB = register[2]
-            tVOCLB = register[3]
-            self.eCO2 = ((co2HB << 8) | co2LB)
-            self.tVOC = ((tVOCHB << 8) | tVOCLB)
+    def readSensorData(self) -> None:
+        if not self.data_available(): return
+        
+        register = self.i2c.readfrom_mem(self.addr, 0x02, 4)
+        co2HB = register[0]
+        co2LB = register[1]
+        tVOCHB = register[2]
+        tVOCLB = register[3]
+        self.eCO2 = ((co2HB << 8) | co2LB)
+        self.tVOC = ((tVOCHB << 8) | tVOCLB)
 
-    def readeCO2(self):
-        """ Equivalent Carbone Dioxide in parts per millions. Clipped to 400 to 8192ppm."""
+    def readeCO2(self) -> int:
+        """
+        Equivalent Carbone Dioxide in parts per millions. Clipped to 400 to 8192ppm.
+        """
 
         self.setup()
 
@@ -218,8 +211,10 @@ class CCS811(object):
                 self.print_error()
 
 
-    def readtVOC(self):
-        """ Total Volatile Organic Compound in parts per billion. """
+    def readtVOC(self) -> int:
+        """
+        Total Volatile Organic Compound in parts per billion.
+        """
 
         self.setup()
 
@@ -235,7 +230,7 @@ class CCS811(object):
         elif self.check_for_error():
                 self.print_error()
 
-    def reset(self):
+    def reset(self) -> None:
         """ Initiate a software reset. """
 
         seq = bytearray([0x11, 0xE5, 0x72, 0x8A])
