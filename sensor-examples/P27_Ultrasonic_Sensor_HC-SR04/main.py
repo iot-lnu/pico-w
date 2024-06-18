@@ -21,5 +21,5 @@ while True:
     ultrason_duration = time_pulse_us(echoPin, 1, 30000)
     distance_cm = SOUND_SPEED * ultrason_duration / 20000
 
-    print("Distance to object is {} centimeter".format(distance_cm))
+    print(f"Distance to object is {distance_cm} centimeter")
     time.sleep_ms(500)

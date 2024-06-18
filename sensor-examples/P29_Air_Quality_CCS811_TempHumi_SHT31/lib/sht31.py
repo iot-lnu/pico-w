@@ -1,7 +1,8 @@
 # Link: https://github.com/kfricke/micropython-sht31
 
-from machine import I2C
+from machine import I2C, SoftI2C
 import time
+from typing import *
 
 R_HIGH   = const(1)
 R_MEDIUM = const(2)
@@ -12,9 +13,15 @@ class SHT31(object):
     This class implements an interface to the SHT31 temprature and humidity
     sensor from Sensirion.
     """
+    
+    __slots__:Tuple[str] = (
+                '_i2c',
+                '_addr',
+                '_map_cs_r'
+                )
 
     # This static map helps keeping the heap and program logic cleaner
-    _map_cs_r = {
+    _map_cs_r: Dict[bool, Dict[int, bytes]] = {
         True: {
             R_HIGH : b'\x2c\x06',
             R_MEDIUM : b'\x2c\x0d',
@@ -27,31 +34,30 @@ class SHT31(object):
             }
         }
 
-    def __init__(self, i2c, addr=0x44):
+    def __init__(self, i2c: I2C | SoftI2C, addr: bytes = 0x44) -> None:
         """
         Initialize a sensor object on the given I2C bus and accessed by the
         given address.
         """
-        if i2c == None:
-            raise ValueError('I2C object needed as argument!')
+        if i2c == None: raise ValueError('I2C object needed as argument!')
         self._i2c = i2c
         self._addr = addr
 
-    def _send(self, buf):
+    def _send(self, buf: bytes) -> None:
         """
         Sends the given buffer object over I2C to the sensor.
         """
         self._i2c.writeto(self._addr, buf)
 
-    def _recv(self, count):
+    def _recv(self, count: int) -> bytes:
         """
         Read bytes from the sensor using I2C. The byte count can be specified
         as an argument.
-        Returns a bytearray for the result.
+        Returns a bytes object for the result.
         """
         return self._i2c.readfrom(self._addr, count)
 
-    def _raw_temp_humi(self, r=R_HIGH, cs=True):
+    def _raw_temp_humi(self, r: int = R_HIGH, cs: bool = True) -> Tuple[float, float]:
         """
         Read the raw temperature and humidity from the sensor and skips CRC
         checking.
@@ -64,7 +70,7 @@ class SHT31(object):
         raw = self._recv(6)
         return (raw[0] << 8) + raw[1], (raw[3] << 8) + raw[4]
 
-    def get_temp_humi(self, resolution=R_HIGH, clock_stretch=True, celsius=True):
+    def get_temp_humi(self, resolution: int = R_HIGH, clock_stretch: bool = True, celsius: bool = True) -> Tuple[float]:
         """
         Read the temperature in degree celsius or fahrenheit and relative
         humidity. Resolution and clock stretching can be specified.
