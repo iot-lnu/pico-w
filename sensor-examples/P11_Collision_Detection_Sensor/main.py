@@ -1,5 +1,5 @@
-import time
 from machine import Pin
+from time import sleep_ms
 
 # Set the led and sensor pin 
 led = Pin("LED", Pin.OUT)
@@ -15,3 +15,4 @@ while True:
     else:
         led.off()
         print("Safe to go...")
+    sleep_ms(20)

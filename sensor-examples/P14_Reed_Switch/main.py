@@ -1,5 +1,5 @@
 from machine import Pin
-import time
+from time import sleep_ms
 
 # Set the pin for reed switch
 reed_switch = Pin(27, Pin.IN)
@@ -12,4 +12,4 @@ while True:
     else:
         print("No Magnetic Field...")
     
-    time.sleep(1)
+    sleep_ms(50)

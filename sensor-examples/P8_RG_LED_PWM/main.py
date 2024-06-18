@@ -1,5 +1,5 @@
 from machine import Pin, PWM
-import time
+from time import sleep_ms
 
 LED_Pin_Red = 27
 LED_Pin_Green = 26
@@ -19,3 +19,4 @@ while True:
         green_pwm_pin.duty_u16(duty)
     for duty in range(65_536,0, -5):
         green_pwm_pin.duty_u16(duty)
+    sleep_ms(20)

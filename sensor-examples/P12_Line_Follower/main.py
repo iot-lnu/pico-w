@@ -1,4 +1,4 @@
-import time
+from time import sleep_ms
 from machine import Pin
 
 # Set the led and sensor pin 
@@ -15,4 +15,4 @@ while True:
     else:
         led.off()
         print("Out of the line...")
-    time.sleep_ms(20)
+    sleep_ms(20)

@@ -1,6 +1,6 @@
 
 from machine import Pin, ADC
-import time
+from time import sleep_ms
 
 # Pin setup
 xAxisPin = ADC(Pin(28))
@@ -29,5 +29,7 @@ while True:
         yAxisStatus = "west"
     if buttonValue == 0:
         buttonStatus = "pressed"
-    print("xAxis value is {} toward {}\nyAxis value is {} toward {}\nButten is {}\n".format(xAxisValue, xAxisStatus, yAxisValue, yAxisStatus, buttonStatus))
-    time.sleep_ms(500)
+    
+    print(f"xAxis value is {xAxisValue} toward {xAxisStatus}\nyAxis value is {yAxisValue} toward {yAxisStatus}\nButten is {buttonStatus}\n")
+    
+    sleep_ms(500)
