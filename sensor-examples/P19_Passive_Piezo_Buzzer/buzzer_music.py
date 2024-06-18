@@ -8,6 +8,7 @@ https://github.com/james1236/buzzer_music
 
 from machine import Pin, PWM
 from math import ceil
+from typing import List
 
 tones = {
     'C0':16,
@@ -136,31 +137,49 @@ tones = {
 #0 D4 8 0;0 D5 8 0;0 G4 8 0;8 C5 2 0;10 B4 2 0;12 G4 2 0;14 F4 1 0;15 G4 17 0;16 D4 8 0;24 C4 8 0
 
 class music:
-    def __init__(self, songString='0 D4 8 0', looping=True, tempo=3, duty=2512, pin=None, pins=[Pin(0)]):
+    """
+    Plays music written on onlinesequencer.net through a passive piezo buzzer.
+    Uses fast arpeggios with a single buzzer to simulate polyphony
+    Also supports multiple buzzers at once for real polyphony
+    https://github.com/james1236/buzzer_music
+    """
+    __slots__ = ("tempo", 
+                 "song", 
+                 "looping", 
+                 "duty", 
+                 "stopped", 
+                 "timer", 
+                 "beat", 
+                 "arpnote", 
+                 "notes", 
+                 "pwms",
+                 "notes",
+                 "playingNotes",
+                 "playingDurations",
+                 "pins",
+                 "end"
+                )
+    
+    pins = []
+    notes = []
+    playingNotes = []
+    playingDurations = []
+    
+    timer = -1
+    beat = -1
+    arpnote = 0
+    
+    stopped = False
+    
+    
+    def __init__(self, songString: str ='0 D4 8 0', looping: bool = True, tempo: int = 3, duty: int = 2512, pin: Pin = None, pins: List[Pin] = [Pin(0)]) -> None:
         self.tempo = tempo
         self.song = songString
         self.looping = looping
         self.duty = duty
         
-        self.stopped = False
-        
-        self.timer = -1
-        self.beat = -1
-        self.arpnote = 0
-        
-        self.pwms = []
-        
-        if (not (pin is None)):
-            pins = [pin]
-        self.pins = pins
-        for pin in pins:
-            self.pwms.append(PWM(pin))
-        
-        self.notes = []
-
-        self.playingNotes = []
-        self.playingDurations = []
-
+        self.pins = [pin] if pin is not None else []
+        self.pwms = [PWM(pin) for pin in self.pins]
 
         #Find the end of the song
         self.end = 0
@@ -188,28 +207,24 @@ class music:
         #Round up end of song to nearest bar
         self.end = ceil(self.end / 8) * 8
     
-    def stop(self):
+    def stop(self) -> None:
         for pwm in self.pwms:
             pwm.deinit()
         self.stopped = True
 
-    def restart(self):
+    def restart(self) -> None:
         self.beat = -1
         self.timer = 0
         self.stop()
-        self.pwms = []
-        for pin in self.pins:
-            self.pwms.append(PWM(pin))
+        self.pwms = [PWM(pin) for pin in self.pins]
         self.stopped = False
 
-    def resume(self):
+    def resume(self) -> None:
         self.stop()
-        self.pwms = []
-        for pin in self.pins:
-            self.pwms.append(PWM(pin))
+        self.pwms = [PWM(pin) for pin in self.pins]
         self.stopped = False
 
-    def tick(self):
+    def tick(self) -> bool:
         if (not self.stopped):
             self.timer = self.timer + 1
             
@@ -236,17 +251,6 @@ class music:
                         i = i + 1
                         
                 #Add new notes and their durations to the playing list
-                
-                """
-                #Old method runs for every note, slow to process on every beat and causes noticeable delay
-                ssong = song.split(";")
-                for note in ssong:
-                    snote = note.split(" ")
-                    if int(snote[0]) == beat:
-                        playingNotes.append(snote[1])
-                        playingDurations.append(int(snote[2]))
-                """
-                
                 if (self.beat < len(self.notes)):
                     if (self.notes[self.beat] != None):
                         for note in self.notes[self.beat]:
