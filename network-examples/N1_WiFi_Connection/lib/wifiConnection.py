@@ -2,11 +2,7 @@ import keys
 import network
 from time import sleep
 
-
-
-
-
-def connect():
+def connect()->str:
     wlan = network.WLAN(network.STA_IF)         # Put modem on Station mode
     if not wlan.isconnected():                  # Check if already connected
         print('connecting to network...')
@@ -21,10 +17,10 @@ def connect():
             sleep(1)
     # Print the IP assigned by router
     ip = wlan.ifconfig()[0]
-    print('\nConnected on {}'.format(ip))
+    print(f'\nConnected on {ip}')
     return ip
 
-def disconnect():
+def disconnect() -> None:
     wlan = network.WLAN(network.STA_IF)         # Put modem on Station mode
     wlan.disconnect()
     wlan = None 

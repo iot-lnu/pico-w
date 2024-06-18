@@ -6,17 +6,17 @@ from machine import UART
 
 class lora:
 
-  def __init__(self, debug=False):
+  def __init__(self, debug=False) -> None:
     self._serial = UART(0, 115200)  # use RPI PICO GP0 and GP1
     self.debug = debug
     self.init()
 
-  def Init(self, serial, RX, TX):
+  def Init(self, serial, RX, TX) -> None:
     self._serial = serial
     self._serial.begin(115200, serial.SERIAL_8N1, RX, TX)
     self._serial.flush()
 
-  def checkDeviceConnect(self):
+  def checkDeviceConnect(self) -> bool:
     restr = ""
     self.writeCMD("AT+CGMI?\r\n")
     restr = self.getResponse()
@@ -25,7 +25,7 @@ class lora:
     else:
       return True
 
-  def checkJoinStatus(self):
+  def checkJoinStatus(self) -> bool:
     restr = ""
     self.writeCMD("AT+CSTATUS?\r\n")
     restr = self.getResponse()
@@ -37,7 +37,7 @@ class lora:
     else:
       return False
 
-  def waitMsg(self, t):
+  def waitMsg(self, t) -> str:
     restr = ""
     start = round(time.time() * 1000)
     while True:
@@ -50,11 +50,11 @@ class lora:
         break
     return restr
 
-  def writeCMD(self, command):
+  def writeCMD(self, command) -> None:
     self._serial.write(command)
     time.sleep(0.1)
 
-  def sendMsg(self, data, confirm=1, nbtrials=1):
+  def sendMsg(self, data, confirm=1, nbtrials=1) -> None:
 
     cmd = f"AT+DTRX={confirm},{nbtrials},{len(data)},{data}\r\n"
     if self.debug:
@@ -62,7 +62,7 @@ class lora:
     self.writeCMD(cmd)
     self.getResponse()
 
-  def setSpreadingFactor(self, sf):
+  def setSpreadingFactor(self, sf) -> None:
 
     cmd = f"AT+CDATARATE={sf}\r\n"
     self.writeCMD(cmd)

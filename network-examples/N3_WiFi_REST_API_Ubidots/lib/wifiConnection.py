@@ -2,10 +2,6 @@ import keys
 import network
 from time import sleep
 
-
-
-
-
 def connect():
     wlan = network.WLAN(network.STA_IF)         # Put modem on Station mode
     if not wlan.isconnected():                  # Check if already connected

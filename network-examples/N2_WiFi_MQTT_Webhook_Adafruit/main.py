@@ -16,7 +16,7 @@ led = Pin("LED", Pin.OUT)   # led pin initialization for Raspberry Pi Pico W
 
 
 # Callback Function to respond to messages from Adafruit IO
-def sub_cb(topic, msg):          # sub_cb means "callback subroutine"
+def sub_cb(topic:str, msg: str) -> None:          # sub_cb means "callback subroutine"
     print((topic, msg))          # Outputs the message that was received. Debugging use.
     if msg == b"ON":             # If message says "ON" ...
         led.on()                 # ... then LED on
@@ -26,11 +26,11 @@ def sub_cb(topic, msg):          # sub_cb means "callback subroutine"
         print("Unknown message") # ... do nothing but output that it happened.
 
 # Function to generate a random number between 0 and the upper_bound
-def random_integer(upper_bound):
+def random_integer(upper_bound) -> int:
     return random.getrandbits(32) % upper_bound
 
 # Function to publish random number to Adafruit IO MQTT server at fixed interval
-def send_random():
+def send_random() -> None:
     global last_random_sent_ticks
     global RANDOMS_INTERVAL
 
@@ -38,7 +38,7 @@ def send_random():
         return; # Too soon since last one sent.
 
     some_number = random_integer(100)
-    print("Publishing: {0} to {1} ... ".format(some_number, keys.AIO_RANDOMS_FEED), end='')
+    print(f"Publishing: {some_number} to {keys.AIO_RANDOMS_FEED} ... ", end='')
     try:
         client.publish(topic=keys.AIO_RANDOMS_FEED, msg=str(some_number))
         print("DONE")
@@ -46,7 +46,6 @@ def send_random():
         print("FAILED")
     finally:
         last_random_sent_ticks = time.ticks_ms()
-
 
 # Try WiFi Connection
 try:
@@ -61,7 +60,7 @@ client = MQTTClient(keys.AIO_CLIENT_ID, keys.AIO_SERVER, keys.AIO_PORT, keys.AIO
 client.set_callback(sub_cb)
 client.connect()
 client.subscribe(keys.AIO_LIGHTS_FEED)
-print("Connected to %s, subscribed to %s topic" % (keys.AIO_SERVER, keys.AIO_LIGHTS_FEED))
+print(f"Connected to {keys.AIO_SERVER}, subscribed to {keys.AIO_LIGHTS_FEED} topic")
 
 
 

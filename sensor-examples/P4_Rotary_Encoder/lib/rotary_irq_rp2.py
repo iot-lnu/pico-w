@@ -1,6 +1,5 @@
 from machine import Pin, freq
 from rotary import Rotary
-from config import RENDER_VALUES, CHANNEL, BRIGHTNESS, animation_amount
 
 
 class RotaryIRQ(Rotary):
@@ -88,18 +87,18 @@ class RotaryIRQ(Rotary):
 """
 Two examples of instantiating rotary encoders to control values 
 
-ROTARYIRQ_CHANNEL = RotaryIRQ(  pin_num_clk = 18,
+ROTARYIRQ_A = RotaryIRQ(  pin_num_clk = 18,
                                 pin_num_dt = 19,
-                                label = "Channel",
+                                label = "A",
                                 min_val = 0,
-                                max_val = animation_amount - 1,
+                                max_val = 20,
                                 reverse = False,
                                 range_mode = Rotary.RANGE_WRAP
                             )
 
-ROTARYIRQ_BRIGHTNESS = RotaryIRQ(   pin_num_clk = 27,
+ROTARYIRQ_B = RotaryIRQ(   pin_num_clk = 27,
                                     pin_num_dt = 26,
-                                    label = "Brightness",
+                                    label = "B",
                                     min_val = 0,
                                     max_val = 20,
                                     reverse = False,

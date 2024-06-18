@@ -9,19 +9,19 @@ import wifiConnection         # Contains functions to connect/disconnect from Wi
 import ujson                  # Creating JSON object for MQTT & Telegraf
 import sys                    # Using sys to print Exception reasons
 import wifiConnection         # Using for WiFi connection
-
+from typing import Any, Dict
 
 # Build jason format for MQTT 
-def build_json(variable_1, value_1):
+def build_json(variable_1:str, value_1:Any) -> str | None:
     try:
-        data = {variable_1: value_1}
-        retValue = ujson.dumps(data)
+        data: Dict[str, Any] = {variable_1: value_1}
+        retValue: str = ujson.dumps(data)
         return retValue
     except:
         return None
 
 # Sensing message to MQTT server
-def send_topic(topicObject, topicName):
+def send_topic(topicObject:str, topicName:str) -> None:
     print(topicObject)
     try:
         client.publish(topic=topicName, msg=topicObject)
@@ -50,7 +50,7 @@ except Exception as error:
     print("Disconnected from WiFi.")
 
 # Keyboard interrupt handler
-def exceptionHandler(e):
+def exceptionHandler(e: Exception) -> None:
     if e is KeyboardInterrupt:
         print("Keyboard interrupt")
     else:
@@ -59,7 +59,7 @@ def exceptionHandler(e):
 # Publishing a random value between 18 and 35 as "indoorTemp" to the MQTT broker 
 while True:
     try:
-        tempObj = build_json("indoorTemp", random.randint(18, 35))
+        tempObj: str | None = build_json("indoorTemp", random.randint(18, 35))
         send_topic(tempObj, config.MQTT_TEMPERATURE_FEED)
         time.sleep(2)
     except Exception as e:

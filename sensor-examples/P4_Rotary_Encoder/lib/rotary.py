@@ -8,7 +8,7 @@
 #   https://github.com/MikeTeachman/micropython-rotary
 
 from micropython import const
-from typing import Self, List, Callable
+from typing import List, Callable
 
 _DIR_CW = const(0x10)  # Clockwise step
 _DIR_CCW = const(0x20)  # Counter-clockwise step
